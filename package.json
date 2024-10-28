@@ -1,5 +1,5 @@
 {
-  "name": "nodebb-plugin-quickstart",
+  "name": "nodebb-plugin-sensitive-words",
   "version": "0.4.3",
   "description": "A starter kit for quickly creating NodeBB plugins",
   "main": "library.js",

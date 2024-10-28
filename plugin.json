@@ -1,27 +1,25 @@
 {
-	"id": "nodebb-plugin-quickstart",
-	"url": "https://github.com/NodeBB/nodebb-plugin-quickstart",
-	"library": "./library.js",
-	"hooks": [
-		{ "hook": "static:app.load", "method": "init" },
-		{ "hook": "static:api.routes", "method": "addRoutes" },
-		{ "hook": "filter:admin.header.build", "method": "addAdminNavigation" }
-	],
-	"staticDirs": {
-		"static": "./static"
-	},
-	"scss": [
-		"scss/quickstart.scss"
-	],
-	"scripts": [
-		"public/lib/main.js"
-	],
-	"acpScripts": [
-		"public/lib/acp-main.js"
-	],
-	"modules": {
-		"../client/quickstart.js": "./public/lib/quickstart.js",
-		"../admin/plugins/quickstart.js": "./public/lib/admin.js"
-	},
-	"templates": "templates"
+  "id": "nodebb-plugin-sensitive-words",
+  "url": "https://github.com/NodeBB/nodebb-plugin-quickstart",
+  "library": "./library.js",
+  "hooks": [
+    { "hook": "static:app.load", "method": "init" },
+    { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
+    { "hook": "filter:post.create", "method": "filterPost" },
+    { "hook": "filter:post.edit", "method": "filterPost" },
+    { "hook": "filter:tags.filter", "method": "filterTags" },
+    { "hook": "filter:topic.create", "method": "filterTopic" },
+    { "hook": "filter:topic.edit", "method": "filterTopic" },
+    { "hook": "filter:parse.aboutme", "method": "filterAboutMe" },
+    { "hook": "filter:parse.signature", "method": "filterSignature" }
+  ],
+  "staticDirs": {
+    "static": "./static"
+  },
+  "scss": ["scss/sensitive-words.scss"],
+  "scripts": ["public/lib/main.js"],
+  "modules": {
+    "../admin/plugins/sensitive-words.js": "./public/lib/admin.js"
+  },
+  "templates": "templates"
 }

@@ -1,88 +1,114 @@
-'use strict';
+"use strict";
 
-const nconf = require.main.require('nconf');
-const winston = require.main.require('winston');
+const nconf = require.main.require("nconf");
+const winston = require.main.require("winston");
 
-const meta = require.main.require('./src/meta');
+const meta = require.main.require("./src/meta");
 
-const controllers = require('./lib/controllers');
+const controllers = require("./lib/controllers");
 
-const routeHelpers = require.main.require('./src/routes/helpers');
+const routeHelpers = require.main.require("./src/routes/helpers");
 
 const plugin = {};
 
-plugin.init = async (params) => {
-	const { router /* , middleware , controllers */ } = params;
-
-	// Settings saved in the plugin settings can be retrieved via settings methods
-	const { setting1, setting2 } = await meta.settings.get('quickstart');
-	if (setting1) {
-		console.log(setting2);
-	}
-
-	/**
-	 * We create two routes for every view. One API call, and the actual route itself.
-	 * Use the `setupPageRoute` helper and NodeBB will take care of everything for you.
-	 *
-	 * Other helpers include `setupAdminPageRoute` and `setupAPIRoute`
-	 * */
-	routeHelpers.setupPageRoute(router, '/quickstart', [(req, res, next) => {
-		winston.info(`[plugins/quickstart] In middleware. This argument can be either a single middleware or an array of middlewares`);
-		setImmediate(next);
-	}], (req, res) => {
-		winston.info(`[plugins/quickstart] Navigated to ${nconf.get('relative_path')}/quickstart`);
-		res.render('quickstart', { uid: req.uid });
-	});
-
-	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/quickstart', controllers.renderAdminPage);
+/**
+ * 根据填写的敏感词生成正则表达式
+ * @returns {RegExp}
+ */
+const getSensitiveWords = async () => {
+  const data = await meta.settings.get("sensitive-words");
+  return new RegExp(
+    (data.sensitiveWords || "")
+      .split(",")
+      .map(item => item.trim())
+      .join("|"),
+    "gi"
+  );
 };
 
 /**
- * If you wish to add routes to NodeBB's RESTful API, listen to the `static:api.routes` hook.
- * Define your routes similarly to above, and allow core to handle the response via the
- * built-in helpers.formatApiResponse() method.
- *
- * In this example route, the `ensureLoggedIn` middleware is added, which means a valid login
- * session or bearer token (which you can create via ACP > Settings > API Access) needs to be
- * passed in.
- *
- * To call this example route:
- *   curl -X GET \
- * 		http://example.org/api/v3/plugins/quickstart/test \
- * 		-H "Authorization: Bearer some_valid_bearer_token"
- *
- * Will yield the following response JSON:
- * 	{
- *		"status": {
- *			"code": "ok",
- *			"message": "OK"
- *		},
- *		"response": {
- *			"foobar": "test"
- *		}
- *	}
+ * 过滤文本
+ * @param {string} content
+ * @returns {Promise<string>}
  */
-plugin.addRoutes = async ({ router, middleware, helpers }) => {
-	const middlewares = [
-		middleware.ensureLoggedIn,			// use this if you want only registered users to call this route
-		// middleware.admin.checkPrivileges,	// use this to restrict the route to administrators
-	];
-
-	routeHelpers.setupApiRoute(router, 'get', '/quickstart/:param1', middlewares, (req, res) => {
-		helpers.formatApiResponse(200, res, {
-			foobar: req.params.param1,
-		});
-	});
+const filterContent = async content => {
+  const regExp = await getSensitiveWords();
+  return typeof content === "string" ? content.replace(regExp, " ** ") : "";
 };
 
-plugin.addAdminNavigation = (header) => {
-	header.plugins.push({
-		route: '/plugins/quickstart',
-		icon: 'fa-tint',
-		name: 'Quickstart',
-	});
+plugin.init = async params => {
+  const { router /* , middleware , controllers */ } = params;
 
-	return header;
+  routeHelpers.setupAdminPageRoute(
+    router,
+    "/admin/plugins/sensitive-words",
+    controllers.renderAdminPage
+  );
+};
+
+plugin.addAdminNavigation = header => {
+  header.plugins.push({
+    route: "/plugins/sensitive-words",
+    icon: "fa-tint",
+    name: "敏感词过滤",
+  });
+
+  return header;
+};
+
+/**
+ * 过滤帖子标题
+ * @param {*} data
+ */
+plugin.filterTopic = async data => {
+  if (data.topic?.title) {
+    data.topic.title = await filterContent(data.topic?.title);
+  }
+  return data;
+};
+
+/**
+ * 过滤回复内容和帖子内容
+ * @param {*} data
+ */
+plugin.filterPost = async data => {
+  if (data.post?.content) {
+    data.post.content = await filterContent(data.post.content);
+  }
+  return data;
+};
+
+/**
+ * 过滤标签内容
+ * @param {*} data
+ */
+plugin.filterTags = async data => {
+  const regExp = await getSensitiveWords();
+  if (Array.isArray(data.tags)) {
+    data.tags = data.tags.map(item => {
+      return item.replace(regExp, "*");
+    });
+  }
+  return data;
+};
+
+/**
+ * 过滤关于我
+ * @param {*} data
+ */
+plugin.filterAboutMe = async data => {
+  return await filterContent(data);
+};
+
+/**
+ * 过滤签名档
+ * @param {*} data
+ */
+plugin.filterSignature = async data => {
+  if (data.userData?.signature) {
+    data.userData.signature = await filterContent(data.userData.signature);
+  }
+  return data;
 };
 
 module.exports = plugin;
