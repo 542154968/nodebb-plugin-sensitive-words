@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sensitive-words",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeBB的敏感词过滤插件",
   "main": "library.js",
   "repository": {
