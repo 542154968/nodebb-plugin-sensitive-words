@@ -1,17 +1,12 @@
-# Quickstart Plugin for NodeBB
+# 安装
 
-A starter kit for quickly creating NodeBB plugins. Comes with a pre-setup LESS file, server side JS script with an `action:app.load` hook, and a client-side script. Most plugins need at least one of the above, so this ought to save you some time. For a full list of hooks have a look at our [wiki page](https://github.com/NodeBB/NodeBB/wiki/Hooks), and for more information about creating plugins please visit our [documentation portal](https://docs.nodebb.org/).
+npm install nodebb-plugin-sensitive-words
 
-Fork this or copy it, and using your favourite text editor find and replace all instances of `nodebb-plugin-quickstart` with `nodebb-plugin-your-plugins-name`. Change the author's name in the LICENSE and package.json files.
+## 简介
 
-## Hello World
+1. 通过后台管理配置敏感词，在渲染和提交的不同钩子周期中，过滤掉这些敏感词。
 
-Really simple, just edit `static/lib/main.js` and paste in `console.log('hello world');`, and that's it!
+## 栗子
 
-## Installation
-
-    npm install nodebb-plugin-quickstart
-
-## Screenshots
-
-Don't forget to add screenshots!
+![演示1](./static/eg.png)
+![演示12](./static/eg-1.png)
