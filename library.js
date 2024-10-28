@@ -19,7 +19,7 @@ const getSensitiveWords = async () => {
   const data = await meta.settings.get("sensitive-words");
   return new RegExp(
     (data.sensitiveWords || "")
-      .split(",")
+      .split(/,|，/)
       .map(item => item.trim())
       .join("|"),
     "gi"
