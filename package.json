@@ -1,17 +1,17 @@
 {
   "name": "nodebb-plugin-sensitive-words",
-  "version": "0.4.3",
-  "description": "A starter kit for quickly creating NodeBB plugins",
+  "version": "1.0.0",
+  "description": "NodeBB的敏感词过滤插件",
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nodebb/nodebb-plugin-quickstart"
+    "url": "https://github.com/542154968/nodebb-plugin-sensitive-words"
   },
   "keywords": [
     "nodebb",
     "plugin",
-    "quickstart",
-    "shell"
+    "sensitive",
+    "words"
   ],
   "husky": {
     "hooks": {
@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nodebb/nodebb-plugin-quickstart/issues"
+    "url": "https://github.com/542154968/nodebb-plugin-sensitive-words/issues"
   },
   "readmeFilename": "README.md",
   "nbbpm": {
