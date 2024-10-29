@@ -302,7 +302,7 @@
   "resolved" "https://registry.npmmirror.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
   "version" "5.3.2"
 
-"acorn@^8.12.0":
+"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", "acorn@^8.12.0":
   "integrity" "sha512-8zSiw54Oxrdym50NlZ9sUusyO1Z1ZchgRLWRaK6c86XJFClyCgFKetdowBg5bKxyp/u+CDBJG4Mpp0m3HLZl9w=="
   "resolved" "https://registry.npmmirror.com/acorn/-/acorn-8.13.0.tgz"
   "version" "8.13.0"
@@ -612,7 +612,7 @@
   dependencies:
     "jiti" "^1.19.1"
 
-"cosmiconfig@^9.0.0":
+"cosmiconfig@^9.0.0", "cosmiconfig@>=8.2":
   "integrity" "sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg=="
   "resolved" "https://registry.npmmirror.com/cosmiconfig/-/cosmiconfig-9.0.0.tgz"
   "version" "9.0.0"
@@ -885,7 +885,7 @@
   dependencies:
     "debug" "^3.2.7"
 
-"eslint-plugin-import@2.x":
+"eslint-plugin-import@^2.25.2", "eslint-plugin-import@2.x":
   "integrity" "sha512-ixmkI62Rbc2/w8Vfxyh1jQRTdRTF52VxwRVHl/ykPAmqG+Nb7/kNn+byLP0LxPgI7zWA16Jt82SybJInmMia3A=="
   "resolved" "https://registry.npmmirror.com/eslint-plugin-import/-/eslint-plugin-import-2.31.0.tgz"
   "version" "2.31.0"
@@ -928,7 +928,7 @@
   "resolved" "https://registry.npmmirror.com/eslint-visitor-keys/-/eslint-visitor-keys-4.1.0.tgz"
   "version" "4.1.0"
 
-"eslint@9.x":
+"eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8 || ^9", "eslint@^6.0.0 || ^7.0.0 || >=8.0.0", "eslint@^7.32.0 || ^8.2.0", "eslint@7.x || 8.x", "eslint@9.x":
   "integrity" "sha512-EYZK6SX6zjFHST/HRytOdA/zE72Cq/bfw45LSyuwrdvcclb/gqV8RRQxywOBEWO2+WDpva6UZa4CcDeJKzUCFA=="
   "resolved" "https://registry.npmmirror.com/eslint/-/eslint-9.13.0.tgz"
   "version" "9.13.0"
@@ -1449,7 +1449,7 @@
   "resolved" "https://registry.npmmirror.com/isexe/-/isexe-2.0.0.tgz"
   "version" "2.0.0"
 
-"jiti@^1.19.1":
+"jiti@*", "jiti@^1.19.1":
   "integrity" "sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA=="
   "resolved" "https://registry.npmmirror.com/jiti/-/jiti-1.20.0.tgz"
   "version" "1.20.0"
